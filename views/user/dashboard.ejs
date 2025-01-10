@@ -4,17 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parking Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+   
 
       body {
         font-family: Arial, sans-serif;
@@ -70,6 +64,7 @@
         align-items: center;
         margin-bottom: 20px;
       }
+      
 
       .input-group {
         display: flex;
@@ -166,13 +161,6 @@
         margin-top: 20px;
         text-align: center;
       }
-      .logo {
-        position: absolute;
-        top: auto;
-        left: 8px;
-        width: 250px; /* Set the desired width to a larger size */
-        height: auto; /* Maintain aspect ratio */
-      }
       #result .alert {
         width: 300px; /* Set width for the square container */
         height: 300px; /* Set fixed height to create a square shape */
@@ -186,37 +174,124 @@
         background-color: #f8f9fa; /* Light background color for contrast */
         margin: 0 auto; /* Center container in its parent */
       }
+      .custom-alert {  
+        position: fixed;  
+        top: 20px;  
+        right: 20px;  
+        z-index: 1050;  
+        min-width: 300px;  
+        max-width: 400px;  
+        padding: 15px;  
+        border-radius: 8px;  
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);  
+        display: flex;  
+        align-items: center;  
+        transform: translateX(120%);  
+        transition: all 0.4s ease-in-out;  
+        opacity: 0;  
+    }  
+
+    .custom-alert.show {  
+        transform: translateX(0);  
+        opacity: 1;  
+    }  
+
+    .custom-alert-icon {  
+        margin-right: 15px;  
+        font-size: 24px;  
+    }  
+
+    .custom-alert-content {  
+        flex-grow: 1;  
+    }  
+
+    .custom-alert-close {  
+        background: none;  
+        border: none;  
+        font-size: 20px;  
+        cursor: pointer;  
+        color: rgba(0,0,0,0.5);  
+        transition: color 0.3s ease;  
+    }  
+
+    .custom-alert-close:hover {  
+        color: rgba(0,0,0,0.8);  
+    }  
+
+    /* Error Alert */  
+    .custom-alert-error {  
+        background-color: #fff2f2;  
+        border-left: 5px solid #ff4d4f;  
+        color: #ff4d4f;  
+    }  
+
+    .custom-alert-error .custom-alert-icon {  
+        color: #ff4d4f;  
+    }  
+
+    /* Success Alert */  
+    .custom-alert-success {  
+        background-color: #f6ffed;  
+        border-left: 5px solid #52c41a;  
+        color: #52c41a;  
+    }  
+
+    .custom-alert-success .custom-alert-icon {  
+        color: #52c41a;  
+    }  
+
+    /* Warning Alert */  
+    .custom-alert-warning {  
+        background-color: #fffbe6;  
+        border-left: 5px solid #faad14;  
+        color: #faad14;  
+    }  
+
+    .custom-alert-warning .custom-alert-icon {  
+        color: #faad14;  
+    }  
     </style>
   </head>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">  
+    <div class="container">  
+        <a href="/user/dashboard" class="navbar-brand">  
+            <img src="/images/parkuy2.png" class="logo" alt="Logo" style="height: 120px;"> <!-- Set a height -->  
+            <!-- `40px` is an example value; adjust as necessary -->  
+        </a>  
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  
+            <span class="navbar-toggler-icon"></span>  
+        </button>  
+        <div class="collapse navbar-collapse" id="navbarNav">  
+            <ul class="navbar-nav"> <!-- Align items to the left -->  
+                <li class="nav-item"><a class="nav-link" href="/user/dashboard">Dashboard</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/profile">Profile</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/ticket">Ticket</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/parkinglot-details">Explore</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/about">About</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/contact">Contact</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/faq">FAQ</a></li>  
+            </ul>  
+        </div>  
+    </div>  
+</nav>
   <body>
-    <nav>
-      <a href="/user/profile">Profile</a>
-      <a href="/user/ticket">Ticket</a>
-      <a href="/user/parkinglot-details">Explore</a>
-      <a href="/user/about">About </a>
-      <a href="/user/contact">Contact</a>
-      <a href="/user/faq">FAQ</a>
-    </nav>
-    </nav>
-    </nav>
-    <header>
-      <img src="../images/parkuy2.png" alt="Parking Logo" class="logo" />
-    </header>
     <div class="container">
       <h1>Find Parking Lot Nearby</h1>
       <h1 class="typing" id="typing-text"></h1>
 
-      <form id="locationForm">
-        <div class="input-group">
-          <input
-            type="text"
-            id="location"
-            required
-            placeholder="e.g., Cibaduyut, Bandung"
-          />
-          <button type="submit">Find</button>
-        </div>
-      </form>
+      <form id="locationForm" class="mb-3"> <!-- Added margin for spacing -->  
+        <div class="input-group">  
+            <input  
+                type="text"  
+                id="location"  
+                class="form-control"
+                required  
+                placeholder="e.g., Cibaduyut, Bandung"  
+            />  
+            <button type="submit" class="btn btn-primary">Find</button>  
+        </div>  
+    </form>
 
       <div id="map"></div>
 
@@ -233,42 +308,114 @@
           >
         </div>
       </div>
-      <ul>
-        <% parkingLots.forEach(lot => { %>
-        <li>
-          <strong><%= lot.name %></strong> -
-          <span
-            ><%= lot.motorcycleAvailableSpot %> motorcycle spots available</span
-          >
-          |
-          <span><%= lot.carAvailableSpot %> car spots available</span>
-          <form action="/book" method="POST">
-            <input type="hidden" name="parkingLotId" value="<%= lot.id %>" />
-            <input type="hidden" name="userId" value="<%= userId %>" />
-
-            <label for="vehicleType">Vehicle Type:</label>
-            <select name="vehicleType" id="vehicleType" required>
-              <option value="motorcycle">Motorcycle</option>
-              <option value="car">Car</option>
-            </select>
-
-            <label for="startTime">Start Time:</label>
-            <input
-              type="datetime-local"
-              id="startTime"
-              name="startTime"
-              required
-            />
-
-            <label for="endTime">End Time:</label>
-            <input type="datetime-local" id="endTime" name="endTime" required />
-
-            <button type="submit">Book</button>
-          </form>
-        </li>
-        <% }); %>
-      </ul>
     </div>
+    <% if (errorMessage) { %>  
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">  
+        <%= errorMessage %>  
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+          <span aria-hidden="true">&times;</span>  
+        </button>  
+      </div>  
+    <% } %>  
+    
+    <% if (successMessage) { %>  
+      <div class="alert alert-success alert-dismissible fade show" role="alert">  
+        <%= successMessage %>  
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+          <span aria-hidden="true">&times;</span>  
+        </button>  
+      </div>  
+    <% } %>
+    <ul class="list-unstyled">  
+      <% parkingLots.forEach((lot) => { %>  
+      <li class="mb-2 text-center">  <!-- Added text-center class here -->  
+          <strong><%= lot.name %></strong><br>  
+          <span><%= lot.motorcycleAvailableSpot %> motorcycle spots available</span> |  
+          <span><%= lot.carAvailableSpot %> car spots available</span>   
+          <br>  
+          <span>Motorcycle tariff (per hour): Rp <%= lot.motorcycle_tariff %></span> |  
+          <span>Car tariff (per hour): Rp <%= lot.car_tariff %></span>  
+          <br>  
+          <div class="mt-2"> <!-- Margin-top for spacing -->  
+              <button type="button" class="btn btn-primary book-button"   
+                      data-toggle="modal" data-target="#bookingModal"  
+                      data-lot-id="<%= lot.id %>"  
+                      data-user-id="<%= userId %>"  
+                      data-lot-name="<%= lot.name %>">  
+                  Book  
+              </button>  
+          </div>  
+      </li>  
+      <% }); %>  
+  </ul>
+</div>  
+
+<!-- Booking Modal -->  
+<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">  
+  <div class="modal-dialog" role="document">  
+      <div class="modal-content">  
+          <div class="modal-header">  
+              <h5 class="modal-title" id="bookingModalLabel">Book Your Parking Spot</h5>  
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">  
+                  <span aria-hidden="true">&times;</span>  
+              </button>  
+          </div>  
+          <div class="modal-body">  
+              <form action="/book" method="POST" id="bookingForm">  
+                  <input type="hidden" name="parkingLotId" id="parkingLotId" />  
+                  <input type="hidden" name="userId"  id="userId" />  
+
+                  <div class="form-group">  
+                      <label for="vehicleType">Vehicle Type:</label>  
+                      <select name="vehicleType" id="vehicleType" class="form-control" required>  
+                          <option value="motorcycle">Motorcycle</option>  
+                          <option value="car">Car</option>  
+                      </select>  
+                  </div>  
+
+                  <div class="form-group">  
+                      <label for="startTime">Start Time:</label>  
+                      <input type="datetime-local" id="startTime" name="startTime" class="form-control" required />  
+                  </div>  
+
+                  <div class="form-group">  
+                      <label for="endTime">End Time:</label>  
+                      <input type="datetime-local" id="endTime" name="endTime" class="form-control" required />  
+                  </div>  
+
+                  <button type="submit" class="btn btn-primary">Book</button>  
+              </form>  
+            
+          </div>  
+      </div>  
+  </div>  
+</div>  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>  
+<!-- Make sure the version of Bootstrap JS corresponds with the Bootstrap CSS version -->  
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+<script>   
+document.querySelectorAll('.book-button').forEach(button => {  
+    button.addEventListener('click', function() {  
+        const lotId = this.getAttribute('data-lot-id');  
+        const userId = this.getAttribute('data-user-id');  
+        const lotName = this.getAttribute('data-lot-name');  
+
+        // Create a variable to hold the hidden inputs  
+        const hiddenInputs = {  
+            parkingLotId: document.getElementById('parkingLotId'),  
+            userId: document.getElementById('userId')  
+        };  
+
+        // Populate the hidden inputs using the variable  
+        hiddenInputs.parkingLotId.value = lotId;  
+        hiddenInputs.userId.value = userId;  
+
+        document.getElementById('bookingModalLabel').innerText = `Book ${lotName}`;  
+    });  
+});
+
+</script>  
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -401,10 +548,26 @@
 
       startTypingEffect('<%= name %>'); // Insert the username dynamically
     </script>
+  <script>
+    $(document).ready(function() {  
+    // Check for error messages in URL  
+    const urlParams = new URLSearchParams(window.location.search);  
+    const errorMessage = urlParams.get('error');  
 
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    // If there's an error message, display it in the modal  
+    if (errorMessage) {  
+        $('#error-message').text(errorMessage).show(); // Show the error message  
+        $('#bookingModal').modal('show'); // Show the modal when there's an error  
+    }  
+
+    // Handle the modal open event  
+    $('#bookingModal').on('show.bs.modal', function (event) {  
+        // Clear previous error messages  
+        $('#error-message').hide().text('');  
+    });  
+});
+  </script>
+   
   </body>
 </html>
 

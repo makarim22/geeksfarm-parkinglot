@@ -3,7 +3,7 @@
 <head>  
     <meta charset="UTF-8" />  
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-    <title>Admin Dashboard</title>  
+    <title><%= title %></title>  
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />  
     <style>  
         .logo {  
@@ -20,7 +20,7 @@
         .admin-title {  
             text-align: center; /* Center align the title */  
             width: 100%; /* Ensure title takes the full width available */  
-        }   
+        }  
     </style>  
 </head>  
 <body class="bg-gray-100">  
@@ -29,15 +29,37 @@
             <img src="../images/parkuy2.png" alt="Parking Logo" class="logo" />  
             <h1 class="admin-title text-4xl font-bold text-gray-800 mt-3">Admin Dashboard</h1>  
         </header>  
-        <div class="flex items-center space-x-4">  
-            <a href="/admin/manage-users" class="text-blue-600 hover:underline">Manage User Coins</a>  
-            <a href="/admin/monitor-parking" class="text-blue-600 hover:underline">Monitor Parking Spaces</a> 
-            <a href="/admin/messages" class="text-blue-600 hover:underline">User Messages</a>   
+        <nav class="flex justify-start space-x-4 mb-6">  
+            <a href="/admin/dashboard" class="text-blue-600 hover:underline">Dashboard</a>  
+            <a href="/admin/manage-users" class="text-blue-600 hover:underline">Top Up Coins</a>  
+            <a href="/admin/messages" class="text-blue-600 hover:underline">User Messages</a>  
+            <a href="/admin/monitor-parking" class="text-blue-600 hover:underline">Monitor Parking</a>
             <a href="/admin/superadmin" class="text-blue-600 hover:underline">Superadmin</a>  
+            <a href="/admin/reset-spots" class="text-blue-600 hover:underline">Reset Capacity</a>    
             <form action="/logout" method="POST" style="display:inline;">  
                 <button type="submit" class="text-blue-600 hover:underline focus:outline-none">Logout</button>  
-            </form>   
-        </div>  
+            </form>  
+        </nav>  
+
+     <!-- Statistics Cards Section -->  
+        <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">  
+            <div class="bg-white p-4 shadow-md rounded-lg flex flex-col items-center">  
+                <h2 class="text-xl font-bold text-gray-700">Total Bookings</h2>  
+                <p class="text-4xl text-blue-500"><%= parkingLots.reduce((acc, lot) => acc + lot.bookingHistory, 0) %></p>  
+            </div>  
+            <div class="bg-white p-4 shadow-md rounded-lg flex flex-col items-center">  
+                <h2 class="text-xl font-bold text-gray-700">Total Revenue</h2>  
+                <p class="text-4xl text-green-500">Rp<%= parkingLots.reduce((acc, lot) => acc + lot.revenueGenerated, 0).toFixed(2) %></p>  
+            </div>  
+                 <div class="bg-white p-4 shadow-md rounded-lg flex flex-col items-center">  
+                    <h2 class="text-xl font-bold text-gray-700">Total Customers</h2>  
+                    <p class="text-4xl text-purple-500"><%= totalCustomers %></p> <!-- New total customers card -->  
+                </div>  
+                <!-- Additional cards can be added here if needed -->  
+    
+            <!-- Additional cards can be added here if needed -->  
+        </section>     
+
         <section class="mt-8">  
             <h2 class="text-xl mb-3">Parking Lots Overview</h2>  
             <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden">  
@@ -59,7 +81,7 @@
                             <td class="border-b border-gray-300 px-4 py-3">  
                                 <a href="/admin/booking-details?lotId=<%= lot.id %>" class="text-blue-600 hover:underline"><%= lot.bookingHistory %></a>  
                             </td>  
-                            <td class="border-b border-gray-300 px-4 py-3">$<%= lot.revenueGenerated.toFixed(2) %></td>  
+                            <td class="border-b border-gray-300 px-4 py-3">Rp<%= lot.revenueGenerated.toFixed(2) %></td>  
                         </tr>  
                     <% }); %>  
                 </tbody>  

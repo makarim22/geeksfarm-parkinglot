@@ -1,10 +1,6 @@
 const express = require('express');  
 const router = express.Router();  
 const authController = require('../controllers/authController2');  
-// Ensure this import is correct  
-const parkingController = require('../controllers/parkingController');  
-const { authenticateJWT } = require('../middleware/authMiddleware');  
-
  
 // Registration route  
 router.get('/register', (req, res) => {  
@@ -12,18 +8,17 @@ router.get('/register', (req, res) => {
 });  
 
 router.post('/register', authController.register); 
-// Login route  
-// router.get('/login', (req, res) => {  
-//     res.render('login', { error: null }); // Render the login page  
-// });  
-
-// router.post('/login', authController.login);  
+ 
 
 router.get('/login', authController.showLoginForm);  
 router.post('/login', authController.login);  
 
 // logout
 router.post('/logout', authController.logout); // Use POST for logout for better security  
+
+router.get('/reset-password', authController.showResetForm); 
+router.post('/reset-password', authController.resetPassword); 
+
 
 module.exports = router;
 

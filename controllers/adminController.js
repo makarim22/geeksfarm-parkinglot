@@ -158,8 +158,40 @@ class AdminController {
             res.status(500).send('Internal Server Error. Please try again later.');  
         }  
     }  
+    async getResetSpotsPage(req, res) {  
+        try {  
+            const parkingLots = await sequelize.query(`SELECT * FROM parking_lots`);  
+            res.render('admin/reset-spots', { parkingLots: parkingLots[0] });  
+        } catch (error) {  
+            console.error('Error fetching parking lots:', error);  
+            res.status(500).send('Server error');  
+        }  
+    }  
+
+    // Reset available spots  
+    async resetAvailableSpots(req, res) {  
+        const parkingLotId = req.params.id;  
+
+        try {  
+            const [result] = await sequelize.query(`  
+                UPDATE parking_lots  
+                SET "motorcycleAvailableSpot" = "motorcycleCapacity",  
+                    "carAvailableSpot" = "carCapacity"  
+                WHERE id = :id  
+            `, {  
+                replacements: { id: parkingLotId }  
+            });  
+
+            if (result.affectedRows === 0) {  
+                return res.status(404).json({ success: false, error: 'Parking lot not found.' });  
+            }  
+
+            res.json({ success: true, message: 'Available spots reset successfully.' });  
+        } catch (error) {  
+            console.error('Error resetting available spots:', error);  
+            res.status(500).json({ success: false, error: 'Internal Server Error. Please try again later.' });  
+        }  
+    }  
 };  
-
-
 
 module.exports = new AdminController();

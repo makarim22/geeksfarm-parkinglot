@@ -1,4 +1,3 @@
-<!-- views/user/individualTicket.ejs -->  
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -21,21 +20,63 @@
         .ticket:hover {  
             transform: scale(1.02);  
         }  
+        nav {  
+            display: flex;  
+            justify-content: center;  
+            padding: 10px 0;  
+            background-color: #f7f8fa;  
+            color: #181616;  
+        }  
+
+        nav ul {  
+            list-style-type: none; /* Remove bullets */  
+            padding: 0; /* Remove default padding */  
+            margin: 0; /* Remove default margin */  
+            display: flex; /* Align items horizontally */  
+        }  
+
+        nav li {  
+            margin: 0 15px; /* Space between items */  
+        }  
+
+        nav a {  
+            color: #181616; /* Set link color */  
+            text-decoration: none; /* Remove underline */  
+            font-weight: bold; /* Make text bold */  
+        }  
+
+        nav a:hover {  
+            text-decoration: underline; /* Underline on hover */  
+        }  
     </style>  
 </head>  
+
 <body class="bg-gray-100">  
+    <nav>  
+        <ul>  
+            <li class="nav-item">  
+                <a class="nav-link" href="/user/dashboard">Dashboard</a>  
+            </li>  
+            <li class="nav-item"><a class="nav-link" href="/user/profile">Profile</a></li>  
+            <li class="nav-item"><a class="nav-link" href="/user/ticket">Ticket</a></li>  
+            <li class="nav-item"><a class="nav-link" href="/user/parkinglot-details">Explore</a></li>  
+            <li class="nav-item"><a class="nav-link" href="/user/about">About</a></li>  
+            <li class="nav-item"><a class="nav-link" href="/user/contact">Contact</a></li>  
+            <li class="nav-item"><a class="nav-link" href="/user/faq">FAQ</a></li>  
+        </ul>  
+    </nav>  
+
     <div class="container mx-auto">  
         <h1 class="text-3xl font-bold text-center my-5">Your Ticket</h1>  
     
         <% if (ticket) { %>  <!-- Check if single ticket data is passed -->  
             <div class="ticket">  
-                <h2 class="text-2xl font-bold">Parking Ticket</h2>  
-                <p><strong>Booking ID:</strong> <span id="bookingId"><%= ticket.bookingid %></span></p>  
-                <p><strong>Issued For:</strong> <span id="userName"><%= ticket.userId %></span></p>  
+                <h2 class="text-2xl font-bold">Parking Ticket</h2>    
+                <p><strong>Issued For:</strong> <span id="userName"><%= ticket.username %></span></p>  
                 <p><strong>Parking Lot Name:</strong> <span id="parkingLot"><%= ticket.parkinglotname %></span></p>  
-                <p><strong>Date:</strong> <span id="bookingDate"><%= new Date(ticket.startTime).toLocaleDateString() %></span></p>  
+                <p><strong>Tanggal dan Waktu:</strong> <span id="bookingDate"><%= new Date(ticket.startTime).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Asia/Jakarta' }) %></span></p>  
                 <p><strong>Duration:</strong> <span id="duration"><%= ticket.duration %></span> hours</p>  
-                <p><strong>Amount Paid:</strong> <span id="totalCost">$<%= ticket.totalCost.toFixed(2) %></span></p>  
+                <p><strong>Amount Paid:</strong> <span id="totalCost">Rp<%= ticket.totalCost.toFixed(2) %></span></p>  
 
                 <svg id="barcode-<%= ticket.bookingid %>"></svg> <!-- SVG for Barcode -->  
 
@@ -44,19 +85,15 @@
         <% } else { %>  
             <p class="text-center">No ticket found.</p>  
         <% } %>  
-
-        <div class="text-center">  
-            <a href="/user/dashboard" class="block mt-5 text-blue-500 hover:underline">Back to Dashboard</a>  
-        </div>  
-    </div>  
+    </div>   
 
     <!-- Include JsBarcode Library -->  
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>  
     <script>  
         document.addEventListener("DOMContentLoaded", function() {  
             const bookingId = "<%= ticket ? ticket.bookingid : '' %>";  
-            const userName = "<%= ticket ? ticket.userid : '' %>";  
-            const bookingDate = "<%= ticket ? new Date(ticket.starttime).toLocaleDateString() : '' %>";  
+            const userName = "<%= ticket ? ticket.userId : '' %>";  
+            const bookingDate = "<%= ticket ? new Date(ticket.startTime).toLocaleDateString() : '' %>";  
 
             // Generate Barcode using JsBarcode  
             if (bookingId && userName && bookingDate) {  
@@ -64,7 +101,7 @@
                 JsBarcode(`#barcode-${bookingId}`, barcodeData, {  
                     format: "CODE128", // Type of barcode  
                     lineColor: "#000",  
-                    width: 2.8,  
+                    width: 2.6,  
                     height: 120,  
                     displayValue: true // Show the value under the barcode  
                 });  

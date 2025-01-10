@@ -51,7 +51,7 @@ exports.topUp = async (req, res) => {
 
         // Render the EJS view with a success message  
         res.render('admin/manage-users', { // Adjust the view name  
-            message: `Successfully topped up ${amount} coins for user ID ${targetUserId}.`, // Pass the message  
+            message: `Successfully topped up IDR ${amount}  for user ID ${targetUserId}.`, // Pass the message  
             users: await getAllUsers(), // Pass the users back to the view (implement getAllUsers function)  
             userId: req.userId, // Ensure to pass any other necessary user data  
             userRole: req.userRole // Optional: pass user role if needed  

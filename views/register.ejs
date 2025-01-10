@@ -1,186 +1,199 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        /* Background image of a parking lot */
-        background-image: url("../images/parkinglot.jpg"); /* Replace with your parking lot image URL */
-        background-size: cover; /* Cover the entire background */
-        background-position: center; /* Center the image */
-        height: 100vh; /* Full viewport height */
-        margin: 0;
-        display: flex; /* Use flexbox for centering */
-        align-items: center; /* Center vertically */
-        justify-content: center; /* Center horizontally */
-      }
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8" />  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+    <title>Register</title>  
+    <link  
+        href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"  
+        rel="stylesheet"  
+    />  
+    <style>  
+        body {  
+            /* Background image of a parking lot */  
+            background-image: url("../images/parkinglot.jpg"); /* Replace with your parking lot image URL */  
+            background-size: cover; /* Cover the entire background */  
+            background-position: center; /* Center the image */  
+            height: 100vh; /* Full viewport height */  
+            margin: 0;  
+            display: flex; /* Use flexbox for centering */  
+            align-items: center; /* Center vertically */  
+            justify-content: center; /* Center horizontally */  
+        }  
 
-      .form-container {
-        background: rgba(
-          255,
-          255,
-          255,
-          0.9
-        ); /* Semi-transparent white background for the form */
-        padding: 30px; /* Padding around the form */
-        border-radius: 10px; /* Rounded corners */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-        width: 100%; /* Full width for responsiveness */
-        max-width: 400px; /* Maximum width of the form */
-      }
+        .form-container {  
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for the form */  
+            padding: 30px; /* Padding around the form */  
+            border-radius: 10px; /* Rounded corners */  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */  
+            width: 100%; /* Full width for responsiveness */  
+            max-width: 400px; /* Maximum width of the form */  
+        }  
 
-      .form-control {
-        margin-bottom: 15px; /* Space between inputs */
-        border: 1px solid #ccc; /* Light gray border */
-      }
+        .form-control {  
+            margin-bottom: 15px; /* Space between inputs */  
+            border: 1px solid #ccc; /* Light gray border */  
+        }  
 
-      .form-control:focus {
-        border-color: #007bff; /* Blue border on focus */
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue shadow effect */
-      }
+        .form-control:focus {  
+            border-color: #007bff; /* Blue border on focus */  
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue shadow effect */  
+        }  
 
-      button {
-        width: 100%; /* Full width for the button */
-        padding: 10px; /* Padding for button */
-        background-color: #007bff; /* Custom button color */
-        color: white; /* Text color for button */
-        border: none; /* Remove border */
-        border-radius: 5px; /* Rounded corners */
-      }
+        button {  
+            width: 100%; /* Full width for the button */  
+            padding: 10px; /* Padding for button */  
+            background-color: #007bff; /* Custom button color */  
+            color: white; /* Text color for button */  
+            border: none; /* Remove border */  
+            border-radius: 5px; /* Rounded corners */  
+        }  
 
-      button:hover {
-        background-color: #0056b3; /* Darker shade on hover */
-      }
+        button:hover {  
+            background-color: #0056b3; /* Darker shade on hover */  
+        }  
 
-      #errorMessage {
-        color: white; /* White text for error message */
-        background-color: rgb(228, 23, 8); /* Red background for error */
-        padding: 10px; /* Padding for the error message */
-        border-radius: 5px; /* Rounded corners */
-        margin-top: 10px;
-        display: none; /* Hidden by default */
-      }
+        #errorMessage {  
+            color: white; /* White text for error message */  
+            background-color: rgb(228, 23, 8); /* Red background for error */  
+            padding: 10px; /* Padding for the error message */  
+            border-radius: 5px; /* Rounded corners */  
+            margin-top: 10px;  
+            display: none; /* Hidden by default */  
+        }  
 
-      #successMessage {
-        color: green; /* Success message color */
-        margin-top: 10px;
-        display: none; /* Hidden by default */
-      }
-    </style>
-  </head>
+        #successMessage {  
+            color: green; /* Success message color */  
+            margin-top: 10px;  
+            display: none; /* Hidden by default */  
+        }  
+    </style>  
+</head>  
 
-  <body>
-    <div class="form-container">
-      <h1 class="text-center mb-4">Register</h1>
+<body>  
+    <div class="form-container">  
+        <h1 class="text-center mb-4">Register</h1>  
 
-      <form id="registrationForm" method="POST">
-        <div class="mb-3">
-          <label for="username" class="form-label">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-            required
-          />
-          <input type="checkbox" id="showPassword" /> Show Password
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="role" class="form-label">Role:</label>
-          <select id="role" name="role" class="form-control" required>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-            <option value="superadmin">Super Admin</option>
-          </select>
-        </div>
-        <button type="submit">Register</button>
-      </form>
+        <form id="registrationForm" method="POST">  
+            <div class="mb-3">  
+                <label for="username" class="form-label">Username:</label>  
+                <input  
+                    type="text"  
+                    id="username"  
+                    name="username"  
+                    class="form-control"  
+                    required  
+                />  
+            </div>  
+            <div class="mb-3">  
+                <label for="password" class="form-label">Password:</label>  
+                <input  
+                    type="password"  
+                    id="password"  
+                    name="password"  
+                    class="form-control"  
+                    required  
+                />  
+                <input type="checkbox" id="showPassword" /> Show Password  
+            </div>  
+            <div class="mb-3">  
+                <label for="confirmPassword" class="form-label">Confirm Password:</label>  
+                <input  
+                    type="password"  
+                    id="confirmPassword"  
+                    name="confirmPassword"  
+                    class="form-control"  
+                    required  
+                />  
+            </div>  
+            <div class="mb-3">  
+                <label for="email" class="form-label">Email:</label>  
+                <input  
+                    type="email"  
+                    id="email"  
+                    name="email"  
+                    class="form-control"  
+                    required  
+                />  
+            </div>  
+            <!-- Removed role dropdown since only "user" role is allowed -->  
+            <input type="hidden" name="role" value="user" /> <!-- Hidden field for role -->  
 
-      <!-- Error message area -->
-      <div id="errorMessage" class="text-center"></div>
-      <div id="successMessage" class="text-center"></div>
-      <!-- Success message area -->
+            <button type="submit">Register</button>  
+        </form>  
 
-      <p class="text-center mt-3">
-        Already have an account? <a href="/login">Login here</a>.
-      </p>
-    </div>
+        <!-- Error message area -->  
+        <div id="errorMessage" class="text-center"></div>  
+        <div id="successMessage" class="text-center"></div> <!-- Success message area -->  
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        // Show Password functionality
-        $("#showPassword").change(function () {
-          const passwordField = $("#password");
-          passwordField.attr("type", this.checked ? "text" : "password"); // Toggle visibility
-        });
+        <p class="text-center mt-3">  
+            Already have an account? <a href="/login">Login here</a>.  
+        </p>  
+        <p><a href="/">Return Home</a></p>  
+    </div>  
 
-        $("#registrationForm").on("submit", function (event) {
-          event.preventDefault(); // Prevent the default form submission
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>  
+    <script>  
+        $(document).ready(function () {  
+            // Show Password functionality  
+            $("#showPassword").change(function () {  
+                const passwordField = $("#password");  
+                const confirmPasswordField = $("#confirmPassword");  
+                const type = this.checked ? "text" : "password"; // Toggle visibility  
+                passwordField.attr("type", type);  
+                confirmPasswordField.attr("type", type);  
+            });  
 
-          // Clear previous messages
-          $("#errorMessage").hide();
-          $("#successMessage").hide();
+            $("#registrationForm").on("submit", function (event) {  
+                event.preventDefault(); // Prevent the default form submission  
 
-          // Serialize form data
-          const formData = $(this).serialize();
-          console.log("Form data:", formData); // Log serialized data
+                // Clear previous messages  
+                $("#errorMessage").hide();  
+                $("#successMessage").hide();  
 
-          // Send AJAX request
-          $.ajax({
-            type: "POST",
-            url: "/register", // Your form action URL
-            data: formData,
-            success: function (response) {
-              console.log("Success response:", response); // Log response
-              $("#successMessage").text(response.message).show(); // Show success message
+                // Validate passwords  
+                const password = $("#password").val();  
+                const confirmPassword = $("#confirmPassword").val();  
+                if (password !== confirmPassword) {  
+                    $("#errorMessage")  
+                        .text("Passwords do not match.")  
+                        .show(); // Show error message  
+                    return;  
+                }  
 
-              // Redirect to login page after a delay (e.g., 3 seconds)
-              setTimeout(function () {
-                window.location.href = "/login"; // Redirect to login page
-              }, 2000);
-            },
-            error: function (xhr) {
-              console.error("Error response:", xhr); // Log error response
-              const errorResponse = JSON.parse(xhr.responseText);
-              $("#errorMessage")
-                .text(
-                  errorResponse.error ||
-                    "An error occurred. Please try again later."
-                )
-                .show(); // Show error message
-            },
-          });
-        });
-      });
-    </script>
-  </body>
+                // Serialize form data  
+                const formData = $(this).serialize();  
+                console.log("Form data:", formData); // Log serialized data  
+
+                // Send AJAX request  
+                $.ajax({  
+                    type: "POST",  
+                    url: "/register", // Your form action URL  
+                    data: formData,  
+                    success: function (response) {  
+                        console.log("Success response:", response); // Log response  
+                        $("#successMessage").text(response.message).show(); // Show success message  
+
+                        // Redirect to login page after a delay (e.g., 3 seconds)  
+                        setTimeout(function () {  
+                            window.location.href = "/login"; // Redirect to login page  
+                        }, 2000);  
+                    },  
+                    error: function (xhr) {  
+                        console.error("Error response:", xhr); // Log error response  
+                        const errorResponse = JSON.parse(xhr.responseText);  
+                        $("#errorMessage")  
+                            .text(  
+                                errorResponse.error ||  
+                                "An error occurred. Please try again later."  
+                            )  
+                            .show(); // Show error message  
+                    },  
+                });  
+            });  
+        });  
+    </script>  
+</body>  
 </html>

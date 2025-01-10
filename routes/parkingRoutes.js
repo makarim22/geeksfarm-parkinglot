@@ -6,6 +6,5 @@ const { authenticateJWT } = require('../middleware/authMiddleware');
 
 // Dashboard route  
 router.get('/dashboard',  parkingController.dashboard);  
-// router.post('/book',  bookingController.book);  
 
 module.exports = router;

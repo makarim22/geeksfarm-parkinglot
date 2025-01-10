@@ -14,7 +14,7 @@
             color: #333;  
         }  
         header {  
-            background: #ffffff;  /* Green background */  
+            background: #ffffff;  
             color: #302828;  
             padding: 1rem 0;  
             text-align: center;  
@@ -51,6 +51,7 @@
             display: flex;  
             justify-content: space-around;  
             margin: 20px 0;  
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */  
         }  
         .feature {  
             background: white;  
@@ -60,6 +61,21 @@
             text-align: center;  
             flex: 1;  
             margin: 10px;  
+            min-width: 250px; /* Minimum width for each feature */  
+        }  
+        .video-responsive {  
+            overflow: hidden;  
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */  
+            position: relative;  
+            height: 0;  
+            margin: 40px 0; /* Space above and below the video */  
+        }  
+        .video-responsive iframe {  
+            position: absolute;  
+            top: 0;  
+            left: 168px;  
+            width: 70%; /* Full width */  
+            height: 70%; /* Full height */  
         }  
     </style>  
 </head>  
@@ -67,7 +83,7 @@
     <header>  
         <img src="../images/parkuy2.png" alt="Parking Logo" class="logo"> <!-- Adjust the path to your logo image -->  
         <h1>Welcome to Parkuy</h1>  
-        <h3>Parkir, kuy!</h3>
+        <h3>Parkir, kuy!</h3>  
     </header>  
     <div class="container">  
         <div class="cta">  
@@ -76,6 +92,7 @@
             <a href="/register">Get Started</a>  
             <a href="/login" style="margin-left: 10px;">Login</a>  
         </div>  
+         
         <div class="features">  
             <div class="feature">  
                 <h3>Easy Registration</h3>  
@@ -90,14 +107,27 @@
                 <p>Pay securely through our application with ease.</p>  
             </div>  
             <div class="feature">  
-                <h3>Your Ticket</h3>  
+                <h3>Get Ticket</h3>  
                 <p>Get a digital ticket with a barcode for easy access.</p>  
             </div>  
         </div>  
     </div>  
+
+    <!-- Video Embed Section -->  
+    <section class="mt-5  text-center">  
+        <div class="container">
+            <div class="cta">  
+            <h2>Watch Our Company Profile</h2> 
+        </div>
+         
+        <div class="video-responsive">  
+            <iframe src="https://www.youtube.com/embed/uUhLbMQaOAo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
+        </div>  
+    </section>   
+
     <footer>  
         <div style="text-align:center; padding: 20px;">  
-            &copy; 2024 Parking Application. All rights reserved.  
+            &copy; 2025 Parkuy. All rights reserved.  
         </div>  
     </footer>  
 </body>  

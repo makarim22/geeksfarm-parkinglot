@@ -1,0 +1,72 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Reset Parking Spots</title>  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">  
+    <style>  
+        .logo {  
+            width: 250px; /* Set the desired width for the logo */  
+            height: auto; /* Maintain aspect ratio */  
+            margin-bottom: 10px; /* Space between logo and title */  
+        }  
+    </style>  
+</head>  
+
+<body class="bg-gray-100">  
+    <div class="container mx-auto p-6">  
+        <div class="flex items-center justify-between mb-6">  
+            <img src="../images/parkuy2.png" alt="Parking Logo" class="logo" />  
+            <div class="text-center flex-1">  
+                <h1 class="text-4xl font-bold text-gray-800 mt-2">Reset Parking Spots</h1>  
+            </div>  
+        </div>  
+
+        <nav class="flex justify-start space-x-4 mb-6">  
+            <a href="/admin/dashboard" class="text-blue-600 hover:underline">Dashboard</a>  
+            <a href="/admin/manage-users" class="text-blue-600 hover:underline">Manage Users</a>  
+            <a href="/admin/messages" class="text-blue-600 hover:underline">User Messages</a>  
+            <a href="/admin/monitor-parking" class="text-blue-600 hover:underline">Monitor Parking</a>  
+            <form action="/logout" method="POST" style="display:inline;">  
+                <button type="submit" class="text-blue-600 hover:underline focus:outline-none">Logout</button>  
+            </form>  
+        </nav>  
+
+        <% if (typeof message !== 'undefined' && message) { %>  
+            <div class="bg-green-200 text-green-800 p-2 rounded mb-4">  
+                <%= message %>  
+            </div>  
+        <% } %>  
+
+        <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden">  
+            <thead class="bg-gray-200">  
+                <tr>  
+                    <th class="border-b-2 border-gray-300 px-4 py-2 text-left">Parking Lot Name</th> 
+                    <th class="border-b-2 border-gray-300 px-4 py-2 text-left">Motorcycle Capacity</th>   
+                    <th class="border-b-2 border-gray-300 px-4 py-2 text-left">Motorcycle Available</th>  
+                    <th class="border-b-2 border-gray-300 px-4 py-2 text-left">Car Capacity</th>  
+                    <th class="border-b-2 border-gray-300 px-4 py-2 text-left">Car Available</th>  
+                    <th class="border-b-2 border-gray-300 px-4 py-2 text-left">Reset Spots</th>  
+                </tr>  
+            </thead>  
+            <tbody>  
+                <% parkingLots.forEach(parkingLot => { %>  
+                    <tr class="hover:bg-gray-100 transition-colors duration-200">  
+                        <td class="border-b border-gray-300 px-4 py-2"><%= parkingLot.name %></td>  
+                        <td class="border-b border-gray-300 px-4 py-2"><%= parkingLot.motorcycleCapacity %></td>  
+                        <td class="border-b border-gray-300 px-4 py-2"><%= parkingLot.motorcycleAvailableSpot %></td>  
+                        <td class="border-b border-gray-300 px-4 py-2"><%= parkingLot.carCapacity %></td>
+                        <td class="border-b border-gray-300 px-4 py-2"><%= parkingLot.carAvailableSpot %></td>  
+                        <td class="border-b border-gray-300 px-4 py-2">  
+                            <form class="inline" action="/admin/reset-spots/<%= parkingLot.id %>" method="POST">  
+                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 focus:outline-none">Reset</button>  
+                            </form>  
+                        </td>  
+                    </tr>  
+                <% }); %>  
+            </tbody>  
+        </table>  
+    </div>  
+</body>  
+</html>

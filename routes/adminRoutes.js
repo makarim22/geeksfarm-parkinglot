@@ -24,27 +24,6 @@ router.get('admin/manage-users', isAdmin, async (req, res) => {
     }  
 });  
 
-// Handle top-up coins  
-// router.post('/admin/top-up', isAdmin, async (req, res) => {  
-//     const { userId, amount } = req.body;  
-
-//     try {  
-//         await sequelize.query(`  
-//             UPDATE users  
-//             SET coins = coins + :amount  
-//             WHERE id = :userId  
-//         `, {  
-//             replacements: { amount, userId },  
-//             type: sequelize.QueryTypes.UPDATE,  
-//         });  
-
-//         res.redirect('/admin/manage-users');  
-//     } catch (error) {  
-//         console.error('Error topping up coins:', error);  
-//         res.status(500).send('Server error');  
-//     }  
-// });  
-
 router.post('/top-up', authenticateJWT, isAdmin, topUpController.topUp); 
 
 
@@ -93,6 +72,17 @@ router.get('/admin/manage-users',  authenticateJWT, isAdmin, adminController.man
 router.get('/messages', authenticateJWT, isAdmin, adminController.getContactMessages);  
 router.get('/booking-details', authenticateJWT, isAdmin, adminController.bookingDetails); 
 router.get('/superadmin', authenticateJWT, isSuperAdmin, superadminController.getSuperadminPage);
-router.post('/superadmin/delete/:id', authenticateJWT, isSuperAdmin, superadminController.deleteUserAdmin); // Add delete route // Ensure only Superadmin can access
+// Route to render the superadmin page  
+// Route to handle user creation  
+router.post('/superadmin/create', authenticateJWT, isSuperAdmin, superadminController.createUser);  
+router.post('/superadmin/delete/:id', authenticateJWT, isSuperAdmin, superadminController.deleteUserAdmin);
+
+
+
+// Route to go to the admin reset page  
+router.get('/reset-spots', authenticateJWT, isAdmin, adminController.getResetSpotsPage);  
+
+// Route to reset available spots for a specific parking lot  
+router.post('/reset-spots/:id', authenticateJWT, isAdmin, adminController.resetAvailableSpots);  
 
 module.exports = router;

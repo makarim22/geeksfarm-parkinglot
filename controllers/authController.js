@@ -2,33 +2,6 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');  
 const jwt = require('jsonwebtoken');  
 
-// exports.register = async (req, res) => {  
-//     const { username, password, email, role } = req.body;  
-
-//     // Validate input  
-//     if (!username || !password || !email || !role) {  
-//         return res.render('register', { error: 'All fields are required.' });  
-//     }  
-
-//     // Check if the user already exists  
-//     const existingUser = await User.findOne({ where: { username } });  
-//     if (existingUser) {  
-//         return res.render('register', { error: 'Username already exists' });  
-//     }  
-
-//     // Hash the password  
-//     const hashedPassword = await bcrypt.hash(password, 10);  
-
-//     // Create a new user  
-//     try {  
-//         await User.create({ username, password: hashedPassword, email, role });  
-//         res.redirect('/login'); // Redirect to login after successful registration  
-//     } catch (error) {  
-//         console.error('Error creating user:', error);  
-//         res.render('register', { error: 'Registration failed. Please try again.' });  
-//     }  
-// };
-
 exports.register = async (req, res) => {  
     const { username, password, email, role } = req.body;  
 

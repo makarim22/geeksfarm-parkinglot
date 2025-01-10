@@ -1,10 +1,20 @@
 const express = require('express');  
 const bodyParser = require('body-parser');  
-const session = require('express-session');  
+const session = require('express-session'); 
+ 
+const path = require('path');  
+
 const sequelize = require('./config/database');  
 // const cron = require('node-cron');  
 const cookieParser = require('cookie-parser');
 
+
+//
+const morgan = require('morgan'); 
+const fs = require('fs'); 
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+
+//
 /// define routes
 const authRoutes = require('./routes/authRoutes');  
 const parkingRoutes = require('./routes/parkingRoutes');  
@@ -15,8 +25,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const {isAdmin} = require ('./middleware/authmiddleware2')
-const errorHandler = require('./middleware/errorHandler');  
-const ticketRoutes = require('./routes/ticketRoutes'); //const userRoutes = require('./routes/user');  
+const errorHandler = require('./middleware/errorHandler');    
 const cors = require('cors');  
 require('dotenv').config();  
 
@@ -44,7 +53,10 @@ app.use(cors());
 app.set('view engine', 'ejs');  
 app.set('views', './views');  
 
-
+//
+app.use(morgan('combined', { stream: accessLogStream }));  
+app.use(morgan('dev'));
+// //
 // Routes  
 app.use('/', homeRoutes);  
 app.use('/', authRoutes); // Add the authentication routes  
@@ -54,10 +66,11 @@ app.use('/admin', adminRoutes);
 app.use('/user', userRoutes);
 app.use('/', bookingRoutes); 
 app.use('/', profileRoutes);
-app.use('/', ticketRoutes);  
+// app.use('/', ticketRoutes);  
 app.use('/', userRoutes);// Add the profile routes here 
+
 app.use(express.static('public'));
-sequelize.sync({ alter: true }); // This will adjust the models to match the database schema
+// sequelize.sync({ alter: true }); // This will adjust the models to match the database schema
 
 app.use(errorHandler);  
 app.use((err, req, res, next) => {  

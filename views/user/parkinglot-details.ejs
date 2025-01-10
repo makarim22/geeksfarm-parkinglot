@@ -11,24 +11,52 @@
             height: 300px; /* Set the desired height for all images */  
             object-fit: cover; /* Ensures the aspect ratio is maintained and fills the space */  
         }  
-        .logo {
-        position : left;
-        top: 8px;
-        left: 8px;
-        width: 250px; /* Set the desired width to a larger size */
-        height: 180px; /* Maintain aspect ratio */
+      nav {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      nav a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
       }
     </style>  
 </head>  
-<div class="text-left mt-5">  
-    <a href="/user/dashboard">  
-        <img src="/images/parkuy2.png" class="logo" >  
-    </a>  
-</div>  
+<nav class="navbar navbar-expand-lg navbar-light bg-light">  
+    <div class="container">  
+        <a href="/user/dashboard" class="navbar-brand">  
+            <img src="/images/parkuy2.png" class="logo" alt="Logo" style="height: 120px;"> <!-- Set a height -->  
+            <!-- `40px` is an example value; adjust as necessary -->  
+        </a>  
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  
+            <span class="navbar-toggler-icon"></span>  
+        </button>  
+        <div class="collapse navbar-collapse" id="navbarNav">  
+            <ul class="navbar-nav"> <!-- Align items to the left -->  
+                <li class="nav-item"><a class="nav-link" href="/user/dashboard">Dashboard</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/profile">Profile</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/ticket">Ticket</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/parkinglot-details">Explore</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/about">About</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/contact">Contact</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/faq">FAQ</a></li>  
+            </ul>  
+        </div>  
+    </div>  
+</nav>
 <body>  
   
     <div class="container mt-5">  
-        <h1 class="text-center">Available Parking Lots</h1>  
+        <h1 class="text-center" >Available Parking Lots</h1>  
         <div class="row">  
             <% parkingLots.forEach(lot => { %>  
                 <div class="col-md-4 mb-4">  
@@ -38,7 +66,9 @@
                             <h5 class="card-title"><%= lot.name %></h5>  
                             <p class="card-text"><strong>Address:</strong> <%= lot.address %></p>  
                             <p><strong>Opening Time:</strong> <%= lot.openingTime %> </p>  
-                            <p><strong>Closing Time:</strong> <%= lot.closingTime %> </p>  
+                            <p><strong>Closing Time:</strong> <%= lot.closingTime %> </p>
+                            <p><strong>Tarif motor (per jam):</strong> <%= lot.motorcycle_tariff %> </p>  
+                            <p><strong>Tarif mobil (per jam):</strong> <%= lot.car_tariff %> </p>    
                             <p><strong>Rating:</strong> <%= lot.rating %> ⭐</p>  
  
                             <hr>  
@@ -54,9 +84,7 @@
             <% }); %>  
         </div>  
     </div>  
-    <div class="text-center mt-5">  
-        <a href="/user/dashboard" class="btn btn-primary">Back to Dashboard</a>  
-    </div>  
+   
 </div>  
 
 

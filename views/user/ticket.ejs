@@ -4,8 +4,7 @@
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Your Tickets</title>  
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">  
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>  
         /* Styles for the Ticket */  
         .ticket {  
@@ -21,20 +20,49 @@
         .ticket:hover {  
             transform: scale(1.02);  
         }  
-        .logo {
-        position : left;
-        top: 8px;
-        left: 8px;
-        width: 250px; /* Set the desired width to a larger size */
-        height: 180px; /* Maintain aspect ratio */
+        
+      nav {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        background-color: #ffffff;
+        color: #fff;
+      }
+
+      nav a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
       }
     </style>  
 </head>  
-<div class="text-left mt-5">  
-    <a href="/user/dashboard">  
-        <img src="/images/parkuy2.png" class="logo" >  
-    </a>  
-</div>  
+<nav class="navbar navbar-expand-lg navbar-light bg-light">  
+    <div class="container">  
+        <a href="/user/dashboard" class="navbar-brand">  
+            <img src="/images/parkuy2.png" class="logo" alt="Logo" style="height: 120px;"> <!-- Set a height -->  
+            <!-- `40px` is an example value; adjust as necessary -->  
+        </a>  
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  
+            <span class="navbar-toggler-icon"></span>  
+        </button>  
+        <div class="collapse navbar-collapse" id="navbarNav">  
+            <ul class="navbar-nav"> <!-- Align items to the left -->  
+                <li class="nav-item"><a class="nav-link" href="/user/dashboard">Dashboard</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/profile">Profile</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/ticket">Ticket</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/parkinglot-details">Explore</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/about">About</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/contact">Contact</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/faq">FAQ</a></li>  
+            </ul>  
+        </div>  
+    </div>  
+</nav> 
 <body class="bg-gray-100">  
     <div class="container mx-auto">  
         <h1 class="text-3xl font-bold text-center my-5">My Tickets</h1>  
@@ -42,12 +70,12 @@
         <% if (ticket) { %>  <!-- Check if single ticket data is passed -->  
             <div class="ticket">  
                 <h2 class="text-2xl font-bold">Parking Ticket</h2>  
-                <p><strong>Booking ID:</strong> <span id="bookingId"><%= ticket.bookingid %></span></p>  
-                <p><strong>Issued For:</strong> <span id="userName"><%= ticket.userId %></span></p>  
-                <p><strong>Parking Lot Name:</strong> <span id="parkingLot"><%= ticket.parkinglotname %></span></p>  
-                <p><strong>Date:</strong> <span id="bookingDate"><%= new Date(ticket.startTime).toLocaleDateString() %></span></p>  
-                <p><strong>Duration:</strong> <span id="duration"><%= ticket.duration %></span> hours</p>  
-                <p><strong>Amount Paid:</strong> <span id="totalCost">$<%= ticket.totalCost.toFixed(2) %></span></p>  
+                <p><strong>Issued for:</strong> <span id="userName"><%= ticket.username %></span></p>  
+                <p><strong>Vehicle Type:</strong> <span id="vehicleType"><%= ticket.vehicleType %></span></p> 
+                <p><strong>Nama Tempat Parkir:</strong> <span id="parkingLot"><%= ticket.parkinglotname %></span></p> 
+                <p><strong>Tanggal dan Waktu:</strong> <span id="bookingDate"><%= new Date(ticket.startTime).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Asia/Jakarta' }) %></span></p>  
+                <p><strong>Durasi:</strong> <span id="duration"><%= ticket.duration %></span> hours</p>  
+                <p><strong>Jumlah dibayarkan:</strong> <span id="totalCost">$<%= ticket.totalCost.toFixed(2) %></span></p>  
 
                 <svg id="barcode-<%= ticket.bookingid %>"></svg> <!-- SVG for Barcode -->  
 
@@ -58,13 +86,13 @@
             <% tickets.sort((a, b) => new Date(b.startTime) - new Date(a.startTime)); %>  
             <% tickets.forEach(ticket => { %>  
                 <div class="ticket">  
-                    <h2 class="text-2xl font-bold">Parking Ticket</h2>  
-                    <p><strong>Booking ID:</strong> <span id="bookingId"><%= ticket.bookingid %></span></p>  
-                    <p><strong>Issued For:</strong> <span id="userName"><%= ticket.userId %></span></p>  
+                    <h2 class="text-2xl font-bold">Parking Ticket</h2>   
+                    <p><strong>Issued For:</strong> <span id="userName"><%= ticket.username %></span></p>  
+                    <p><strong>Vehicle Type:</strong> <span id="vehicleType"><%= ticket.vehicleType %></span></p>
                     <p><strong>Parking Lot Name:</strong> <span id="parkingLot"><%= ticket.parkinglotname %></span></p>  
-                    <p><strong>Date:</strong> <span id="bookingDate"><%= new Date(ticket.startTime).toLocaleDateString() %></span></p>  
+                    <p><strong>Time:</strong> <span id="bookingDate"><%= new Date(ticket.startTime).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Asia/Jakarta' }) %></span></p>  
                     <p><strong>Duration:</strong> <span id="duration"><%= ticket.duration %></span> hours</p>  
-                    <p><strong>Amount Paid:</strong> <span id="totalCost">$<%= ticket.totalCost.toFixed(2) %></span></p>  
+                    <p><strong>Amount Paid:</strong> <span id="totalCost">Rp<%= ticket.totalCost.toFixed(2) %></span></p>  
 
                     <svg id="barcode-<%= ticket.bookingid %>"></svg> <!-- SVG for Barcode -->  
 
@@ -73,26 +101,44 @@
             <% }); %>  
 
             <!-- Pagination Controls -->  
-            <div class="flex justify-center mt-5">  
-                <% if (page > 1) { %>  
-                    <a href="?page=<%= page - 1 %>&limit=<%= limit %>" class="mx-2 text-blue-500 hover:underline">Previous</a>  
-                <% } %>  
-                <% for (let i = 1; i <= totalPages; i++) { %>  
-                    <a href="?page=<%= i %>&limit=<%= limit %>" class="mx-2 text-blue-500 hover:underline <%= page === i ? 'font-bold' : '' %>"><%= i %></a>  
-                <% } %>  
-                <% if (page < totalPages) { %>  
-                    <a href="?page=<%= page + 1 %>&limit=<%= limit %>" class="mx-2 text-blue-500 hover:underline">Next</a>  
-                <% } %>  
-            </div>  
+<nav aria-label="Page navigation" class="my-5">  
+    <ul class="pagination justify-content-center">  
+        <% if (page > 1) { %>  
+            <li class="page-item">  
+                <a href="?page=<%= page - 1 %>&limit=<%= limit %>" class="page-link" aria-label="Previous">  
+                    <span aria-hidden="true">&laquo;</span> <!-- left arrow for previous -->  
+                </a>  
+            </li>  
+        <% } else { %>  
+            <li class="page-item disabled">  
+                <span class="page-link" aria-hidden="true">&laquo;</span>  
+            </li>  
+        <% } %>  
+        
+        <% for (let i = 1; i <= totalPages; i++) { %>  
+            <li class="page-item <%= page === i ? 'active' : '' %>">  
+                <a href="?page=<%= i %>&limit=<%= limit %>" class="page-link"><%= i %></a>  
+            </li>  
+        <% } %>  
+        
+        <% if (page < totalPages) { %>  
+            <li class="page-item">  
+                <a href="?page=<%= page + 1 %>&limit=<%= limit %>" class="page-link" aria-label="Next">  
+                    <span aria-hidden="true">&raquo;</span> <!-- right arrow for next -->  
+                </a>  
+            </li>  
+        <% } else { %>  
+            <li class="page-item disabled">  
+                <span class="page-link" aria-hidden="true">&raquo;</span>  
+            </li>  
+        <% } %>  
+    </ul>  
+</nav>
 
         <% } else { %>  
             <p class="text-center">No tickets found for this user.</p>  
         <% } %>  
 
-        <div class="text-center mt-5">  
-            <a href="/user/dashboard" class="btn btn-primary">Back to Dashboard</a>  
-        </div>  
-    </div>  
 
     </div>  
 

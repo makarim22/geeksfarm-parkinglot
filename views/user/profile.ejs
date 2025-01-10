@@ -4,7 +4,7 @@
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>User Profile</title>  
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>  
         body {  
             background-color: #f8f9fa; /* Light background color */  
@@ -15,8 +15,8 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */  
         }  
         .profile-header {  
-            background-color: #007bff; /* Branding color */  
-            color: white;  
+            background-color: #ffffff; /* Branding color */  
+            color: rgb(5, 124, 243);  
             border-radius: 15px 15px 0 0; /* Rounded top corners */  
             padding: 20px;  
             text-align: center;  
@@ -32,10 +32,10 @@
         }  
         .profile-picture {  
             position: absolute; /* Position the profile picture */  
-            top: 20px; /* Adjust to position at the top */  
+            top: 7px; /* Adjust to position at the top */  
             right: 20px; /* Adjust to position at the right */  
-            width: 100px; /* Set a fixed width for proper display */  
-            height: 100px; /* Set a fixed height for proper display */  
+            width: 80px; /* Set a fixed width for proper display */  
+            height: 80px; /* Set a fixed height for proper display */  
             border-radius: 50%; /* Makes the image round */  
             object-fit: cover; /* Ensures the image covers the entire area */  
             border: 2px solid white; /* Optional: Add a border */  
@@ -82,54 +82,103 @@
         .badge:hover {  
             transform: scale(1.05);  
         }  
+        .badge-icon {  
+            width: 30px; /* Set width */  
+            height: auto; /* Maintain aspect ratio */  
+            margin-left: 5px; /* Space between badge text and image */  
+        }
         .badge img {  
             width: 20px; /* Adjust icon size */  
             height: 20px; /* Adjust icon size */  
             margin-right: 5px; /* Space between icon and text */  
         }  
+        nav {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        background-color: #b8c0c9;
+        color: #fff;
+      }
+
+      nav a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
+      }
     </style>  
 </head>  
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light">  
+    <div class="container">  
+        <a href="/user/dashboard" class="navbar-brand">  
+            <img src="/images/parkuy2.png" class="logo" alt="Logo" style="height: 120px;"> <!-- Set a height -->  
+            <!-- `40px` is an example value; adjust as necessary -->  
+        </a>  
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">  
+            <span class="navbar-toggler-icon"></span>  
+        </button>  
+        <div class="collapse navbar-collapse" id="navbarNav">  
+            <ul class="navbar-nav"> <!-- Align items to the left -->  
+                <li class="nav-item"><a class="nav-link" href="/user/dashboard">Dashboard</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/profile">Profile</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/ticket">Ticket</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/parkinglot-details">Explore</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/about">About</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/contact">Contact</a></li>  
+                <li class="nav-item"><a class="nav-link" href="/user/faq">FAQ</a></li>  
+            </ul>  
+        </div>  
+    </div>  
+</nav>
 <body>  
-    <div class="container my-5">  
-        <div class="profile-header">  
-            <h1>Profile</h1>  
-            <p>Welcome back, <%= user.username %>!</p>  
+    <div class="container my-5 mb-5">  
+        <div class="profile-header">    
+            <h1>Hola, <%= user.username %>!</h1>  
             <!-- Placeholder for the profile picture -->  
             <img id="profilePicture" src="" alt="Profile Picture" class="profile-picture" style="display: none;">  
         </div>  
-
+        <br>
+        <br>
         <!-- Profile Information Card -->  
         <div class="card">  
             <div class="card-body">  
-                <h5 class="card-title">Account Information</h5>  
+                <h4 class="card-title">Account Information</h4>  
                 <p><strong>Username:</strong> <%= user.username %></p>  
                 <p><strong>Email:</strong> <%= user.email %></p>  
-                <p><strong>Coin Balance:</strong> <%= user.coins %> Coins</p>  
+                <p><strong>Balance:</strong> Rp<%= user.coins %></p>  
                 
                 <!-- Awards & Badges Section -->  
-                <h6>Awards & Badges:</h6>  
-                <div>  
-                    <% if (bookingCount >= 50) { %>  
-                        <span class="badge">Elite Customer</span>  
-                    <% } else if (bookingCount >= 25) { %>  
-                        <span class="badge">Legendary Customer</span>  
-                    <% } else if (bookingCount >= 10) { %>  
-                        <span class="badge">Loyal Customer</span>  
-                    <% } else if (bookingCount >= 5) { %>  
-                        <span class="badge">Frequent Customer</span>  
-                    <% } else if (bookingCount >= 1) { %>  
-                        <span class="badge">Newbie</span>  
-                    <% } %>  
-                </div>  
+                <h4>Badges:</h4>  
+                <div class="d-flex flex-wrap align-items-center">  
+                        <% if (bookingCount >= 50) { %>  
+                            <img src="/images/elite-icon.png" alt="Elite Customer Badge" class="badge-icon">  
+                            <span class="badge me-2">Elite Customer</span>  
+                        <% } else if (bookingCount >= 25) { %>  
+                            <img src="/images/legendary-icon.png" alt="Legendary Customer Badge" class="badge-icon">   
+                            <span class="badge me-2">Legendary Customer</span>   
+                        <% } else if (bookingCount >= 10) { %>  
+                            <img src="/images/loyal-icon.png" alt="Loyal Customer Badge" class="badge-icon">   
+                            <span class="badge me-2">Loyal Customer</span>   
+                        <% } else if (bookingCount >= 5) { %>  
+                            <img src="/images/frequent-icon.png" alt="Frequent Customer Badge" class="badge-icon">  
+                            <span class="badge me-2">Frequent Customer</span>  
+                        <% } else if (bookingCount >= 1) { %>  
+                            <img src="/images/newbie-icon.png" alt="Newbie Badge" class="badge-icon">  
+                            <span class="badge me-2">Newbie</span>  
+                        <% } %>  
+                    </div>
 
                 <!-- Profile Picture Upload Section -->  
-                <h6>Upload Your Profile Picture:</h6>  
+                <h4>Upload Your Profile Picture:</h4>  
                 <form id="uploadForm">  
                     <div class="mb-3">  
-                        <input type="file" class="form-control" id="imageInput" accept=".jpg" required>  
+                        <input type="file" class="form-control" id="imageInput" accept=".jpg, .jpeg" required>  
                     </div>  
-                    <button type="button" class="btn btn-custom" onclick="showProfilePicture()">Upload</button>  
+                    <button type="button" class="btn btn-primary" onclick="showProfilePicture()">Upload</button>  
                 </form>  
             </div>  
         </div>  
@@ -159,7 +208,7 @@
                             <th scope="col">Parking Lot Name</th>  
                             <th scope="col">Location</th>  
                             <th scope="col">Duration (hours)</th>  
-                            <th scope="col">Amount Paid ($)</th>  
+                            <th scope="col">Amount Paid (Rp)</th>  
                             <th scope="col">Booking Date</th>  
                         </tr>  
                     </thead>  
@@ -173,7 +222,7 @@
                                     <td><%= booking.parkinglotname %></td>  
                                     <td><%= booking.parkinglotlocation %></td>  
                                     <td><%= booking.duration %></td>  
-                                    <td>$<%= booking.totalCost ? booking.totalCost.toFixed(2) : '0.00' %></td>  
+                                    <td>Rp<%= booking.totalCost ? booking.totalCost.toFixed(2) : '0.00' %></td>  
                                     <td><%= new Date(booking.startTime).toLocaleDateString() %></td>  
                                 </tr>  
                                 <% totalAmountPaid += booking.totalCost || 0;  
@@ -188,7 +237,7 @@
                     <tfoot>  
                         <tr class="font-weight-bold">  
                             <th colspan="4" class="text-end">Total Amount Paid</th>  
-                            <th>$<%= totalAmountPaid.toFixed(2) %></th>  
+                            <th>Rp<%= totalAmountPaid.toFixed(2) %></th>  
                             <th></th>  
                         </tr>  
                         <tr class="font-weight-bold">  
@@ -201,12 +250,8 @@
             </div>  
         </div>  
 
-        <div class="text-center mb-5">  
             <form action="/logout" method="POST" style="display:inline;">  
                 <button type="submit" class="btn btn-custom">Logout</button>  
-            </form>  
-            <form action="/user/dashboard" method="GET" style="display:inline;">  
-                <button type="submit" class="btn btn-custom">Dashboard</button>  
             </form>  
         </div>  
 

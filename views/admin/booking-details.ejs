@@ -26,8 +26,23 @@
             <a href="/admin/dashboard" class="text-blue-600 hover:underline">Return Dashboard</a>  
             <form action="/logout" method="POST" style="display:inline;">  
                 <button type="submit" class="text-blue-600 hover:underline focus:outline-none">Logout</button>  
-            </form>   
+            </form>  
         </nav>  
+
+        <!-- Summary Section -->  
+        <section class="mt-8 mb-6">  
+            <h2 class="text-xl mb-3">Booking Summary</h2>  
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">  
+                <div class="bg-white p-4 shadow-md rounded-lg flex flex-col items-center">  
+                    <h3 class="text-lg font-bold text-gray-700">Total Bookings</h3>  
+                    <p class="text-4xl text-blue-500"><%= bookings.length %></p>  
+                </div>  
+                <div class="bg-white p-4 shadow-md rounded-lg flex flex-col items-center">  
+                    <h3 class="text-lg font-bold text-gray-700">Total Revenue</h3>  
+                    <p class="text-4xl text-green-500">Rp<%= bookings.reduce((acc, booking) => acc + booking.totalCost, 0).toFixed(2) %></p>  
+                </div>  
+            </div>  
+        </section>  
 
         <section class="mt-8">  
             <h2 class="text-xl mb-3">Booking Details</h2>  
@@ -47,7 +62,7 @@
                             <td class="border-b border-gray-300 px-4 py-3"><%= booking.id %></td>  
                             <td class="border-b border-gray-300 px-4 py-3"><%= booking.userId %></td>  
                             <td class="border-b border-gray-300 px-4 py-3"><%= booking.parkingLotId %></td>  
-                            <td class="border-b border-gray-300 px-4 py-3">$<%= booking.totalCost.toFixed(2) %></td>  
+                            <td class="border-b border-gray-300 px-4 py-3">Rp<%= booking.totalCost.toFixed(2) %></td>  
                             <td class="border-b border-gray-300 px-4 py-3"><%= new Date(booking.createdAt).toLocaleDateString() %></td>  
                         </tr>  
                     <% }); %>  
