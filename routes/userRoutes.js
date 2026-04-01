@@ -6,7 +6,7 @@ const { dashboard } = require('../controllers/parkingController');
 const ticketController = require('../controllers/ticketController');
 const parkingLotDetailsController = require('../controllers/parkingLotDetailsController'); 
 const pagesController = require('../controllers/pagesController');  
-const faqController = require('../controllers/faqController'); 
+const faqController = require('../controllers/faqcontroller'); 
 const router = express.Router();  
 
 router.get('/user/dashboard', authenticateJWT, isUser, dashboard);
