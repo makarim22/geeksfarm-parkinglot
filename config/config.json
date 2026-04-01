@@ -13,7 +13,6 @@
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
- {
   "production": {
     "username": {"ENV": "DB_USER"},
     "password": {"ENV": "DB_PASSWORD"},
@@ -21,5 +20,4 @@
     "host": {"ENV": "DB_HOST"},
     "dialect": "postgres"
   }
-}
 }
