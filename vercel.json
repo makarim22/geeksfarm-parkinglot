@@ -1,0 +1,7 @@
+{
+  "buildCommand": "npm install",
+  "devCommand": "npm start",
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
