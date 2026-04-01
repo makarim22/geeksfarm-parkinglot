@@ -89,8 +89,7 @@ exports.login = async (req, res) => {
             SELECT u.id, u.username, u.password, r.role AS role_name  
             FROM users u  
             JOIN roles r ON u."roleId" = r.id  
-            WHERE u.username = :username  
-            and u."deletedAt" is null
+            WHERE u.username = :username
         `, {  
             replacements: { username },  
             type: sequelize.QueryTypes.SELECT,  

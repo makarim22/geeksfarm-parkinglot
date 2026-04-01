@@ -461,7 +461,8 @@ document.querySelectorAll('.book-button').forEach(button => {
 
               async function findNearestParking(location) {
           const apiKey = '00e706971665492fb55b82a71c48c6e7';
-          const geocodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`;
+          const newapiKey = '1fce102e74f54318b483580ddd3b3be4';
+          const geocodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${newapiKey}`;
 
           try {
               const response = await fetch(geocodeUrl);
