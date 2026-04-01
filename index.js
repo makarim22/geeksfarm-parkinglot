@@ -1,6 +1,7 @@
 const express = require('express');  
 const bodyParser = require('body-parser');  
 const session = require('express-session'); 
+const PgSession = require('connect-pg-simple')(session);
  
 const path = require('path');  
 
@@ -12,7 +13,12 @@ const cookieParser = require('cookie-parser');
 //
 const morgan = require('morgan'); 
 const fs = require('fs'); 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+
+// Only create file stream in development (not on Vercel)
+let accessLogStream;
+if (process.env.NODE_ENV !== 'production') {
+  accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+}
 
 //
 /// define routes
@@ -34,12 +40,20 @@ const PORT = process.env.PORT || 3004;
 
 
 
-// Setup session middleware  
+// Setup session middleware with PostgreSQL store
 app.use(session({  
-    secret: '221998', // Replace with a strong secret key  
+    store: new PgSession({
+      conString: process.env.DATABASE_URL,
+      tableName: 'session' // PostgreSQL will store sessions in this table
+    }),
+    secret: process.env.SESSION_SECRET || '221998', // Use environment variable in production
     resave: false,  
-    saveUninitialized: true,  
-    cookie: { secure: false } // Set to true in production with HTTPS  
+    saveUninitialized: false,  // Changed to false for privacy (only create session when needed)
+    cookie: { 
+      secure: process.env.NODE_ENV === 'production', // true over HTTPS in production
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
 }));  
 
 // Other middlewares and routes...
@@ -54,8 +68,11 @@ app.set('view engine', 'ejs');
 app.set('views', './views');  
 
 //
-app.use(morgan('combined', { stream: accessLogStream }));  
-app.use(morgan('dev'));
+// Only use file-based access logging in development
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('combined', { stream: accessLogStream }));
+}
+app.use(morgan('dev')); // Always log to console
 // //
 // Routes  
 app.use('/', homeRoutes);  
@@ -86,4 +103,3 @@ app.listen(PORT, async () => {
         console.error('Unable to connect to the database:', error);  
     }  
 });
- 

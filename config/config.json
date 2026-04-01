@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "postgres",
-    "password": "P4ssword",
-    "database": "parking-app3",
-    "host": "localhost",
+    "password": "tgl2219971000",
+    "database": "postgres",
+    "host": "db.qmexipnlbymvqytqcuhl.supabase.co",
     "dialect": "postgres"
   },
   "test": {
