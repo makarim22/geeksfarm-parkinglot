@@ -27,7 +27,7 @@
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.9",
-    "pg": "^8.13.1",
+    "pg": "^8.20.0",
     "qr-creator": "^1.0.0",
     "sequelize": "^6.37.5"
   },
