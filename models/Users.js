@@ -19,7 +19,7 @@ const User = sequelize.define('User', {
       },  
       coins: {  
         type: DataTypes.FLOAT,  
-        defaultValue: 100000, // Optional: set a default value  
+        defaultValue: 100000.0, // Optional: set a default value  
         allowNull: true, // Set this to true if you want it optional  
       },  
       roleId: {  // Foreign key to reference Role  
